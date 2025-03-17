@@ -38,7 +38,7 @@ Follow these steps to set up the custom toolchain for spying on Xcode.
 
 Copy the default Xcode toolchain to your user directory to create a custom toolchain.
 
-```
+```bash
 cp -R /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain ~/Library/Developer/Toolchains/MyCustomToolchain.xctoolchain
 ```
 It could be that your toolchain is not part of Xcode and instead residesd in `/Library/Developer/Toolchains` or user level on `~/Library/Developer/Toolchains`
@@ -49,21 +49,21 @@ Modify the ToolchainInfo.plist to recognize your custom toolchain.
 
   - Navigate to the Toolchain Directory:
 
-```
+```bash
 cd ~/Library/Developer/Toolchains/MyCustomToolchain.xctoolchain/
 ```
 
   - Remove ToolchainInfo.plist. Open ToolchainInfo.plist for Editing:
 You can use nano, vim, or any plist editor.
 
-```
+```bash
 rm ToolchainInfo.plist
 nano Info.plist
 ```
 
   - Update to match the Following (Inspired from Swift toolchain):
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -115,20 +115,20 @@ nano Info.plist
 Create the wrapper script that will log invocations and results of toolchain binaries.
   - Create the Wrapper Script File:
 
-```
+```bash
 touch wrap_binaries.sh
 chmod +x wrap_binaries.sh
 ```
 
   - Open the Script for Editing:
 
-```
+```bash
 nano wrap_binaries.sh
 ```
 
   - Paste the Following Script:
 
-```
+```bash
 #!/bin/bash
 
 # ======================================================================
@@ -220,14 +220,14 @@ echo "Log file located at: $LOG_FILE"
 Execute the wrap_binaries.sh script to wrap all relevant binaries in your custom toolchain.
   - Navigate to the Custom Toolchain’s usr/bin/ Directory:
 
-```
+```bash
 cd ~/Library/Developer/Toolchains/MyCustomToolchain.xctoolchain/usr/bin/
 ```
 
   - Place the Wrapper Script in the Directory:
 Ensure wrap_binaries.sh is in the usr/bin/ directory.
 
-```
+```bash
 cp /path/to/your/wrap_binaries.sh .
 chmod +x wrap_binaries.sh
 ```
@@ -236,7 +236,7 @@ Replace /path/to/your/wrap_binaries.sh with the actual path where you created th
 
   - Run the Wrapper Script with sudo:
 
-```
+```bash
 sudo ./wrap_binaries.sh
 ```
 
@@ -266,13 +266,13 @@ All logs are stored in the ~/xcode_toolchain_logs.txt file.
 	1.	Open Terminal.
 	2.	View the Log File:
 
-```
+```bash
 cat ~/xcode_toolchain_logs.txt
 ```
 
 Sample Log Entries:
 
-```
+```log
 2024-04-27 12:34:56 : swiftc called with arguments: --version
 2024-04-27 12:34:56 : swiftc output: Apple Swift version 5.7 (swiftlang-1300.0.29 clang-1300.0.29.1)
 Target: x86_64-apple-darwin20.3.0
